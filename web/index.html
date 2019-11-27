@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shoeb's Project</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+
+<!-- Angular JS -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+<!-- Angular Animate JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-animate.js"></script>
+<!-- Angular Touch JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-touch.js"></script>
+<!-- Angular Route JS -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+<!-- Angular Cookies JS -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-cookies.js"></script>
+
+<!-- Bootstrap CSS CDN -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- Our Custom CSS -->
+<link rel="stylesheet" href="style.css">
+
+<!-- Scroll bar Custom CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+<!-- Font Awesome JS -->
+<script defer
+	src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+	data-integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+	data-crossorigin="anonymous"></script>
+<script defer
+	src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+	data-integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+	data-crossorigin="anonymous"></script>
+
+<!-- Our Angular Controller JS -->
+<script src="RouteConfig.js"></script>
+<script src="c_blog/BlogController.js"></script>
+<script src="c_user/UserController.js"></script>
+<script src="c_Friend/FriendController.js"></script>
+<script src="c_chat/ChatController.js"></script>
+<script src="c_chat/ChatService.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.3/lodash.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+</head>
+
+<body data-ng-app="myApp">
+	<div class="wrapper">
+		<!-- Side bar  -->
+		<nav id="sidebar">
+			<div class="sidebar-header">
+				<h3>Shoeb's Project</h3>
+			</div>
+
+			<!-- Home -->
+			<ul class="list-unstyled components">
+				<li class="active"><a href="#"
+					data-ng-show="currentUser==undefined">Home</a> <a href="#/userhome"
+					data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_USER'">Home</a>
+					<a href="#/adminHome"
+					data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_ADMIN'">Admin
+						Home</a></li>
+
+				<!-- Blogs -->
+				<li><a href="#blogSubmenu"
+					data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_ADMIN'"
+					data-toggle="collapse" aria-expanded="false"
+					class="dropdown-toggle">Blogs</a>
+					<ul class="collapse list-unstyled"
+						data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_ADMIN'"
+						id="blogSubmenu">
+						<li><a href="#/AddBlog">Add Blogs</a></li>
+						<li><a href="#/AdminBlog">Manage Blogs</a></li>
+					</ul> <a href="#/showBlog"
+					data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_USER' || currentUser==undefined">Blogs</a>
+				</li>
+
+				<!-- Forums -->
+				<li><a href="#forumSubmenu"
+					data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_ADMIN'"
+					data-toggle="collapse" aria-expanded="false"
+					class="dropdown-toggle">Forums</a>
+					<ul class="collapse list-unstyled"
+						data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_ADMIN'"
+						id="forumSubmenu">
+						<li><a href="#/AddForum">Add Forums</a></li>
+						<li><a href="#/AdminForum">Manage Forums</a></li>
+					</ul> <a href="#/showForum"
+					data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_USER' || currentUser==undefined">Forums</a>
+				</li>
+
+				<!-- Jobs -->
+				<li><a href="#jobSubmenu"
+					data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_ADMIN'"
+					data-toggle="collapse" aria-expanded="false"
+					class="dropdown-toggle">Jobs</a>
+					<ul class="collapse list-unstyled"
+						data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_ADMIN'"
+						id="jobSubmenu">
+						<li><a href="#/AddJob">Post Jobs</a></li>
+						<li><a href="#/AdminJob">Manage Jobs</a></li>
+					</ul> <a href="#/showJob"
+					data-ng-show="currentUser!=undefined && currentUser.role=='ROLE_USER' || currentUser==undefined">Jobs</a>
+				</li>
+			</ul>
+
+			<!-- Login/Register -->
+			<ul class="list-unstyled CTAs">
+				<li><a href="#/register" data-ng-show="currentUser==undefined"
+					class="register">Register</a></li>
+
+				<li><a href="#/login" data-ng-show="currentUser==undefined"
+					class="login">Log in</a></li>
+				<li><div data-ng-controller="UserController">
+						<button data-ng-show="currentUser!=undefined"
+							data-ng-click="logout()" class="button">Log out</button>
+					</div></li>
+			</ul>
+		</nav>
+
+		<!-- Page Content  -->
+		<div id="content">
+
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<div class="container-fluid">
+
+					<button type="button" id="sidebarCollapse" class="btn btn-info">
+						<i class="fas fa-align-left"></i> <span>Menu</span>
+					</button>
+					<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+						type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<i class="fas fa-align-justify"></i>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="nav navbar-nav ml-auto">
+							<li class="nav-item" data-ng-show="currentUser.role=='ROLE_USER'"><a
+								class="nav-link" href="#/showFriends">Friends</a></li>
+							<li class="nav-item" data-ng-show="currentUser.role=='ROLE_USER'"><a
+								class="nav-link" href="#/chat">Chat</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+			<div data-ng-view></div>
+		</div>
+	</div>
+
+	<!-- jQuery CDN - Min version -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<!-- Popper.JS -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!-- Bootstrap UI JS -->
+	<script type="text/javascript" src="ui-bootstrap-tpls-3.0.6.js"></script>
+	<!-- jQuery Custom Scroll bar CDN -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#sidebar").mCustomScrollbar({
+				theme : "minimal"
+			});
+
+			$('#sidebarCollapse').on('click', function() {
+				$('#sidebar, #content').toggleClass('active');
+				$('.collapse.in').toggleClass('in');
+				$('a[aria-expanded=true]').attr('aria-expanded', 'false');
+			});
+		});
+	</script>
+</body>
+</html>

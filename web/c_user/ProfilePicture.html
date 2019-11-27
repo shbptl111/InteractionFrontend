@@ -1,0 +1,21 @@
+<div class="container" ng-controller="UserController">
+	<h1 class="well">
+		<center>
+			<font face="Monotype Corsiva">Profile Picture</font>
+		</center>
+	</h1>
+	<form enctype="multipart/form-data" method="post"
+		action="http://localhost:8086/InteractionMiddleware/doUpload">
+		<table>
+			<tr>
+				<td>Picture</td>
+				<td><input type="file" name="file1"/></td>
+			</tr>
+			<tr>
+				<td colspan="2"><center>
+						<input type="submit" value="Upload">
+					</center></td>
+			</tr>
+		</table>
+	</form>
+</div>

@@ -1,0 +1,11 @@
+<div class="container" ng-controller="FriendController">
+Suggested Friend Requests
+<table width="50%" align="center" cellpadding="20">
+<tr ng-repeat="friend in suggestedFriendList">
+<td><img src="http://localhost:8086/InteractionMiddleware/getImage/{{friend.loginName}}" class="img-circle" width="100" height="100"/>
+{{friend.username}}
+</td>
+<td><input type="button" value="Send Request" class="btn btn-danger" ng-click="sendFriendRequest(friend.loginName)"/></td>
+</tr>
+</table>
+</div>

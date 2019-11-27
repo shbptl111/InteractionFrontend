@@ -1,0 +1,18 @@
+<div class="container" data-ng-controller="UserController">
+	<h2>Login</h2>
+	<form name="loginForm" class="was-validated" autocomplete="off" novalidate>
+	<div class="form-group">
+	<label for="uname">Login name:</label>
+	<input type="text" class="form-control" id="uname" placeholder="Enter login name" name="uname" data-ng-model="User.loginName" required>
+	<div class="valid-feedback">&#x2713;</div>
+	<div class="invalid-feedback" data-ng-hide="loginForm.uname.$pristine || loginForm.uname.$untouched">Please fill in your login name.</div>
+	</div>
+	<div class="form-group">
+	<label for="password">Password:</label>
+	<input type="password" class="form-control" id="password" placeholder="Enter your password" name="password" data-ng-model="User.password" required>
+	<div class="valid-feedback">&#x2713;</div>
+	<div class="invalid-feedback" data-ng-hide="loginForm.password.$pristine || loginForm.password.$untouched">Please enter your password.</div>
+	</div>
+	<button type="submit" class="btn btn-primary" data-ng-click="logincheck()" data-ng-disabled="!loginForm.uname.$dirty || !loginForm.password.$dirty">Log in</button>
+	</form>
+</div>

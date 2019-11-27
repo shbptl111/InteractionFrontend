@@ -1,0 +1,50 @@
+<div class="container" data-ng-controller="BlogController">
+	<h2>{{getblog.blogName}}</h2>
+	<div class="card">
+		<div class="card-body">
+			<p class="card-text">{{getblog.blogDesc}}</p>
+		</div>
+	</div>
+
+	<div class="container box">
+		<div class="float-left form-group">
+			<form data-ng-show="currentUser.role=='ROLE_USER'">
+				<label>Reply:</label>
+				<textarea class="form-control" rows="5" cols="50" name="commentText"
+					id="commentText" data-ng-model="blogComment.commentText" required></textarea>
+				<input type="submit" value="Send" class="btn btn-primary"
+					data-ng-click="addBlogComment(getblog.blogId)">
+			</form>
+		</div>
+		<div class="float-right">
+			<button data-ng-show="currentUser.role=='ROLE_USER'" type="button"
+				class="btn btn-primary"
+				data-ng-click="incrementLike(getblog.blogId); (localLikes = localLikes+1);"
+				data-ng-model="localLikes" data-ng-init="localLikes=getblog.likes">
+				<i class="fas fa-long-arrow-alt-up"></i> <span>{{localLikes}}</span>
+			</button>
+			<button data-ng-show="currentUser.role=='ROLE_USER'" type="button"
+				class="btn btn-danger"
+				data-ng-click="incrementDisLike(getblog.blogId); (localDislikes = localDislikes+1);"
+				data-ng-model="localDislikes"
+				data-ng-init="localDislikes=getblog.dislikes">
+				<span>{{localDislikes}} </span><i class="fas fa-long-arrow-alt-down"></i>
+			</button>
+		</div>
+		<div class="clear-float"></div>
+	</div>
+
+	<div class="container">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Comments:</h4>
+				<div data-ng-repeat="comment in getComments" class="comment">
+					<p class="card-text comment-title">On {{comment.commentDate}} {{comment.loginName}} wrote:</p>
+					<p class="card-text comment-text">{{comment.commentText}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+

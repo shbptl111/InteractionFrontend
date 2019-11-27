@@ -1,0 +1,27 @@
+<div class="container" data-ng-controller="BlogController">
+	<uib-accordion>
+	<div data-uib-accordion-group class="mt-1"
+		data-heading="{{blog.blogName}}" data-ng-repeat="blog in blogdata">
+		<div class="float-right">
+			<p>
+				<sub>Date: {{blog.createdate}}</sub>
+			</p>
+		</div>
+		<div class="clear-float"></div>
+		<div class="float-left blog-preview">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+				do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+				enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+				ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+				reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+				pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+				culpa qui officia deserunt mollit anim id est laborum.</p>
+		</div>
+		<div class="clear-float"></div>
+		<div class="container ml-1">
+			<button data-ng-click="getBlog(blog.blogId); listBlogComments(blog.blogId);" value="Read more...">Read More...</button>
+			<!-- <a data-ng-click="getBlog(blog.blogId); listBlogComments(blog.blogId);">Read more...</a> -->
+		</div>
+	</div>
+	</uib-accordion>
+</div>

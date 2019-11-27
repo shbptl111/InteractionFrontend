@@ -1,0 +1,30 @@
+<div class="container" data-ng-controller="BlogController">
+	<div class="container">
+		<table class="table">
+			<thead>
+				<tr style="text-align: center;">
+					<th>Blog ID</th>
+					<th>Blog Name</th>
+					<th>Blog Content</th>
+					<th>Approve</th>
+					<th>Decline</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="blog in blogdata" style="text-align: center;">
+					<td>{{blog.blogId}}</td>
+					<td>{{blog.blogName}}</td>
+					<td>{{blog.blogDesc}}</td>
+					<td><button type="button" data-ng-click="approve(blog.blogId)"
+							class="register disabled" data-ng-disabled="blog.status=='A'">
+							<span><i class="fas fa-check"></i></span>
+						</button></td>
+					<td><button type="button" data-ng-click="reject(blog.blogId)"
+							class="register disabled" data-ng-disabled="blog.status=='NA'">
+							<span><i class="fas fa-trash-alt"></i></span>
+						</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
